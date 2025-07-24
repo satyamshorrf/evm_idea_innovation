@@ -26,17 +26,27 @@ void setup() {
   lcd.init();
   lcd.backlight();
 
-  // Welcome screen
+  // First welcome screen
   lcd.setCursor(0, 0);
   lcd.print("17 BIHAR BN NCC");
   lcd.setCursor(0, 1);
   lcd.print("CADET SATYAM");
   delay(3000);
   lcd.clear();
+
+  // Second welcome screen
   lcd.setCursor(0, 0);
   lcd.print("Voting Machine");
   lcd.setCursor(0, 1);
   lcd.print("TPC Madhepura");
+  delay(3000);
+  lcd.clear();
+
+  // Custom welcome screen
+  lcd.setCursor(0, 0);
+  lcd.print("Welcome Satyam");
+  lcd.setCursor(0, 1);
+  lcd.print("Continue No: 74");
   delay(3000);
   lcd.clear();
 }
@@ -66,7 +76,7 @@ void loop() {
     digitalWrite(greenLED, HIGH);
     delay(300);
     digitalWrite(greenLED, LOW);
-    while (digitalRead(party2Btn) == LOW);
+    while (digitalRead(party2Btn) == LOW); // Debounce
     delay(300);
   }
 

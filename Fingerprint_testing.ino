@@ -27,7 +27,7 @@ int selectedParty = 0;
 String partyList[2] = {"Party A", "Party B"};
 int voteCount[2] = {0, 0};
 
-// Setup
+// ------------------------- Setup -------------------------
 void setup() {
   Serial.begin(9600);
   fingerSerial.begin(57600);
@@ -44,11 +44,21 @@ void setup() {
   pinMode(whiteLED, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
 
+  // ✅ Welcome message
   lcd.setCursor(0, 0);
-  lcd.print("EVM Ready...");
-  delay(2000);
+  lcd.print("17 BIHAR BN NCC");
+  lcd.setCursor(0, 1);
+  lcd.print("CADET SATYAM");
+  delay(3000);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Voting Machine");
+  lcd.setCursor(0, 1);
+  lcd.print("TPC Madhepura");
+  delay(3000);
   lcd.clear();
 
+  // ✅ Fingerprint sensor check
   if (!finger.verifyPassword()) {
     lcd.print("Sensor Error!");
     while (1);
@@ -58,7 +68,7 @@ void setup() {
   digitalWrite(whiteLED, HIGH);
 }
 
-// Main loop
+// ------------------------- Main Loop -------------------------
 void loop() {
   if (digitalRead(addBtn) == LOW) {
     addFingerprint();
@@ -82,7 +92,7 @@ void loop() {
   }
 }
 
-// Enroll Finger
+// ------------------------- Enroll Finger -------------------------
 void addFingerprint() {
   lcd.clear();
   lcd.print("Enroll Finger...");
@@ -98,7 +108,7 @@ void addFingerprint() {
   delay(1000);
 }
 
-// Delete Finger
+// ------------------------- Delete Finger -------------------------
 void deleteFingerprint() {
   lcd.clear();
   lcd.print("Del ID 1 to 20...");
@@ -113,7 +123,7 @@ void deleteFingerprint() {
   }
 }
 
-// Voting Menu
+// ------------------------- Voting Menu -------------------------
 void voteMenu(int userID) {
   selectedParty = 0;
   while (true) {
@@ -148,7 +158,7 @@ void voteMenu(int userID) {
   }
 }
 
-// Show Result
+// ------------------------- Show Results -------------------------
 void showResults() {
   lcd.clear();
   lcd.print("A:");
@@ -161,7 +171,7 @@ void showResults() {
   lcd.print("Place Finger...");
 }
 
-// Finger Matching
+// ------------------------- Finger Match -------------------------
 int getFingerprintID() {
   finger.getImage();
   if (finger.image2Tz() != FINGERPRINT_OK) return -1;
@@ -169,7 +179,7 @@ int getFingerprintID() {
   return finger.fingerID;
 }
 
-// Enroll Logic
+// ------------------------- Enroll Logic -------------------------
 uint8_t enrollFinger(uint8_t id) {
   int p = -1;
   lcd.clear();
