@@ -4,7 +4,7 @@
 #include <SoftwareSerial.h>
 
 // LCD setup
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 // Fingerprint sensor on pin 2 & 3
 SoftwareSerial mySerial(2, 3);
@@ -31,6 +31,29 @@ void setup() {
   lcd.init();
   lcd.backlight();
 
+  // ===== Custom Welcome Screens =====
+  lcd.setCursor(2, 0);
+  lcd.print("17 BIHAR BN NCC");
+  lcd.setCursor(3, 1);
+  lcd.print("CADET SATYAM");
+  delay(3000);
+  lcd.clear();
+
+  lcd.setCursor(2, 0);
+  lcd.print("Voting Machine");
+  lcd.setCursor(2, 1);
+  lcd.print("TPC Madhepura");
+  delay(3000);
+  lcd.clear();
+
+  lcd.setCursor(2, 0);
+  lcd.print("Welcome Satyam");
+  lcd.setCursor(2, 1);
+  lcd.print("Continue No: 74");
+  delay(3000);
+  lcd.clear();
+  // ===================================
+
   finger.begin(57600);
   if (!finger.verifyPassword()) {
     lcd.print("Sensor ERROR!");
@@ -55,7 +78,7 @@ void setup() {
 void loop() {
   if (!votingEnabled) return;  // block until enrollment done
   if (hasVoted) {
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print("Vote Cast Done");
     return;
   }
@@ -108,7 +131,6 @@ void showResult() {
   else if (vote1 > vote2) lcd.print("BJP Wins!");
   else if (vote2 > vote1) lcd.print("INC Wins!");
   else lcd.print("Tie!");
-
   delay(4000);
   lcd.clear();
 }
